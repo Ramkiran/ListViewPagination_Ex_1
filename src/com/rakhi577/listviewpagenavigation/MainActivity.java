@@ -9,15 +9,19 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {   
     
 	private ListView listview;
+	private TextView title;
 	private Button btn_prev;
 	private Button btn_next;
 	
 	private ArrayList<String> data;
 	ArrayAdapter<String> sd;
+	
+	private int pageCount ;
 	
 	/**
 	 * Using this increment value we can move the listview items
@@ -42,10 +46,23 @@ public class MainActivity extends Activity {
     listview = (ListView)findViewById(R.id.list);
     btn_prev	 = (Button)findViewById(R.id.prev);
     btn_next	 = (Button)findViewById(R.id.next);
+    title	 = (TextView)findViewById(R.id.title);
     
     btn_prev.setEnabled(false);
     
     data = new ArrayList<String>();
+    
+    /**
+     * this block is for checking the number of pages
+     * ====================================================
+     */
+    
+    int val = TOTAL_LIST_ITEMS%NUM_ITEMS_PAGE;
+	val = val==0?0:1;
+	pageCount = TOTAL_LIST_ITEMS/NUM_ITEMS_PAGE+val;
+	/**
+	 * =====================================================
+	 */
     
     /**
      * The ArrayList data contains all the list items
@@ -84,9 +101,7 @@ public class MainActivity extends Activity {
 	 */
 	private void CheckEnable()
 	{
-		int val = TOTAL_LIST_ITEMS%NUM_ITEMS_PAGE;
-		val = val==0?0:1;
-		if(increment+1 == TOTAL_LIST_ITEMS/NUM_ITEMS_PAGE+val)
+		if(increment+1 == pageCount)
 		{
 			btn_next.setEnabled(false);
 		}
@@ -108,6 +123,7 @@ public class MainActivity extends Activity {
 	private void loadList(int number)
 	{
 		ArrayList<String> sort = new ArrayList<String>();
+		title.setText("Page "+(number+1)+" of "+pageCount);
 		
 		int start = number * NUM_ITEMS_PAGE;
 		for(int i=start;i<(start)+NUM_ITEMS_PAGE;i++)
