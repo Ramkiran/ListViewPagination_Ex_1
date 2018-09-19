@@ -100,19 +100,16 @@ public class MainActivity extends Activity {
 	 * Method for enabling and disabling Buttons
 	 */
 	private void CheckEnable()
-	{
+	{		
+		btn_prev.setEnabled(true);
+		btn_next.setEnabled(true);
 		if(increment+1 == pageCount)
 		{
 			btn_next.setEnabled(false);
 		}
-		else if(increment == 0)
+		if(increment == 0)
 		{
 			btn_prev.setEnabled(false);
-		}
-		else
-		{
-			btn_prev.setEnabled(true);
-			btn_next.setEnabled(true);
 		}
 	}
 	
